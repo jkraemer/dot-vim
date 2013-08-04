@@ -7,3 +7,18 @@
 [submodule "bundle/vim-bundler"]
 	path = bundle/vim-bundler
 	url = git://github.com/tpope/vim-bundler.git
+[submodule "bundle/command-t"]
+	path = bundle/command-t
+	url = git://git.wincent.com/command-t.git
+[submodule "bundle/vim-repeat"]
+	path = bundle/vim-repeat
+	url = git://github.com/tpope/vim-repeat
+[submodule "bundle/vim-surround"]
+	path = bundle/vim-surround
+	url = git://github.com/tpope/vim-surround
+[submodule "bundle/vim-rainbow_parantheses"]
+	path = bundle/vim-rainbow_parantheses
+	url = https://github.com/kien/rainbow_parentheses.vim.git
+[submodule "bundle/vim-ack"]
+	path = bundle/vim-ack
+	url = https://github.com/mileszs/ack.vim.git

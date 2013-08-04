@@ -1,4 +1,18 @@
 " a lot of stuff taken from http://stevelosh.com/blog/2010/09/coming-home-to-vim
+" https://bitbucket.org/sjl/dotfiles/src/bd5cc7a9e0c81eda3ca9bfbcfc1d94a30173451d/vim/vimrc?at=default
+
+let $BASH_ENV = "~/.bash_profile"
+set shell=/bin/bash
+
+" pathogen
+""""""""""
+filetype off
+call pathogen#incubate()
+filetype plugin indent on
+
+
+" Basic settings
+""""""""""""""""
 
 set nocompatible
 set history=100
@@ -10,13 +24,19 @@ set history=100
 " but it causes an error for me:
 set viminfo=/10,'10,f0,h,\"100
 
+
+" file opening
+set wildmenu
 " have command-line completion <Tab> (for filenames, help topics, option
 " names) first list the available options and complete the longest common
 " part, then have further <Tab>s cycle through the possibilities:
 set wildmode=list:longest,full
+" files to ignore
+set wildignore+=*.o,*.obj,*.png,*.jpg,.git,tmp
 
-" use "[RO]" for "[readonly]" to save space in the message line:
-set shortmess+=r
+" Better Completion
+set complete=.,w,b,u,t
+set completeopt=longest,menuone,preview
 
 " treat lines starting with a quote mark as comments (for `Vim' files, such as
 " this very one!)
@@ -28,8 +48,6 @@ set autoindent
 set showmode
 set showcmd
 set hidden
-set wildmenu
-set wildmode=list:longest
 set visualbell
 set cursorline
 set ttyfast
@@ -37,16 +55,19 @@ set ruler
 set backspace=indent,eol,start
 set laststatus=2
 
-" pathogen
-""""""""""
-filetype off
-call pathogen#incubate()
-filetype plugin indent on
+" Sudo to write
+cnoremap w!! w !sudo tee % >/dev/null
 
+" Source
+vnoremap <leader>S y:execute @@<cr>:echo 'Sourced selection.'<cr>
+nnoremap <leader>S ^vg_y:execute @@<cr>:echo 'Sourced line.'<cr>
 
 " Display and Colors
-""""""""
+""""""""""""""""""""
+
 syntax on
+" Don't try to highlight lines longer than 800 characters.
+set synmaxcol=800
 set t_Co=256
 "color railscasts+
 color vibrantink
@@ -56,6 +77,16 @@ set background=dark
 set list
 " set listchars=tab:▸\ ,eol:¬
 set list listchars=extends:»,trail:·
+set showbreak=↪
+
+" use "[RO]" for "[readonly]" to save space in the message line:
+set shortmess+=r
+
+" \-r to toggle rainbow parens
+nmap <leader>r :RainbowParenthesesToggle<cr>
+
+" Highlight VCS conflict markers
+match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
 
 " Tabs
@@ -177,8 +208,8 @@ set wrap
 " already done by yy):
 noremap Y y$
 
-" \-W strip all trailing whitespace in file
-nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
+" \-w strip all trailing whitespace in file
+nnoremap <leader>w :%s/\s\+$//<cr>:let @/=''<CR>
 " remap para
 nnoremap <leader>q gqip
 "   gqap
@@ -197,7 +228,8 @@ nnoremap W gqqj
 set formatoptions-=t
 set textwidth=79
 
-
+" C-u to uppercase current word
+inoremap <C-u> <esc>mzgUiw`za
 
 " Split windows / multi file
 """"""""""""""""""""""""""""
@@ -225,6 +257,19 @@ set hidden
 set switchbuf=useopen
 
 
+" commandT
+let g:CommandTMaxHeight=15
 
 
+" Line Return {{{
 
+" Make sure Vim returns to the same line when you reopen a file.
+augroup line_return
+    au!
+    au BufReadPost *
+        \ if line("'\"") > 0 && line("'\"") <= line("$") |
+        \     execute 'normal! g`"zvzz' |
+        \ endif
+augroup END
+
+" }}}
