@@ -62,6 +62,9 @@ cnoremap w!! w !sudo tee % >/dev/null
 vnoremap <leader>S y:execute @@<cr>:echo 'Sourced selection.'<cr>
 nnoremap <leader>S ^vg_y:execute @@<cr>:echo 'Sourced line.'<cr>
 
+" Made D behave
+nnoremap D d$
+
 " Display and Colors
 """"""""""""""""""""
 
@@ -76,7 +79,7 @@ set background=dark
 " show special chars
 set list
 " set listchars=tab:▸\ ,eol:¬
-set list listchars=extends:»,trail:·
+set list listchars=tab:▸\ ,extends:»,trail:·
 set showbreak=↪
 
 " use "[RO]" for "[readonly]" to save space in the message line:
@@ -133,8 +136,8 @@ nmap <F4> \tl
 """"""""""""""""""
 
 " fix search regex handling
-nnoremap / /\v
-vnoremap / /\v
+" nnoremap / /\v
+" vnoremap / /\v
 
 " make searches case-insensitive, unless they contain upper-case letters:
 set ignorecase
@@ -151,6 +154,13 @@ nnoremap <leader>a :Ack
 " replace in whole line by default
 set gdefault
 
+" Keep search matches in the middle of the window and pulse the line when moving
+" to them.
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+" Don't move on *
+nnoremap * *<c-o>
 
 
 " Movement
@@ -159,8 +169,8 @@ set gdefault
 " show relative linenumbers
 set relativenumber
 
-nnoremap <tab> %
-vnoremap <tab> %
+" matchit with tab
+map <tab> %
 
 " disable evil cursor keys
 nnoremap <up> <nop>
@@ -210,14 +220,8 @@ noremap Y y$
 
 " \-w strip all trailing whitespace in file
 nnoremap <leader>w :%s/\s\+$//<cr>:let @/=''<CR>
-" remap para
-nnoremap <leader>q gqip
-"   gqap
-"   gqqj
-"   kgqj
 
 " have Q reformat the current paragraph (or selected text if there is any):
-" map  gqqj
 nnoremap Q gqap
 vnoremap Q gq
 nnoremap W gqqj
@@ -235,13 +239,12 @@ inoremap <C-u> <esc>mzgUiw`za
 """"""""""""""""""""""""""""
 
 " \-w to vsplit
-nnoremap <leader>w <C-w>v<C-w>l
+nnoremap <leader>v <C-w>v<C-w>l
 
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
-nnoremap <C-Tab> <C-w>w
 
 " switch to next split
 nnoremap <S-Tab> <C-W>w
@@ -273,3 +276,4 @@ augroup line_return
 augroup END
 
 " }}}
+
