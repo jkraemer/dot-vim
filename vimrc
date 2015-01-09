@@ -259,6 +259,7 @@ set hidden
 " window
 set switchbuf=useopen
 
+au BufRead,BufNewFile *.hamlc set ft=haml
 
 " commandT
 let g:CommandTMaxHeight=15
