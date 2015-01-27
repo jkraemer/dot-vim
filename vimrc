@@ -2,7 +2,8 @@
 " https://bitbucket.org/sjl/dotfiles/src/bd5cc7a9e0c81eda3ca9bfbcfc1d94a30173451d/vim/vimrc?at=default
 
 let $BASH_ENV = "~/.bash_profile"
-set shell=/bin/bash
+let $ZSH_ENV = "~/.zshenv"
+set shell=/bin/zsh
 
 " pathogen
 """"""""""
@@ -260,6 +261,7 @@ set hidden
 set switchbuf=useopen
 
 au BufRead,BufNewFile *.hamlc set ft=haml
+au BufRead,BufNewFile *.md    set ft=markdown
 
 " commandT
 let g:CommandTMaxHeight=15
