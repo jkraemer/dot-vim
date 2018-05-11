@@ -5,6 +5,8 @@ let $BASH_ENV = "~/.bash_profile"
 let $ZSH_ENV = "~/.zshenv"
 set shell=/bin/zsh
 
+set mouse=
+
 " pathogen
 """"""""""
 filetype off
@@ -14,6 +16,15 @@ filetype plugin indent on
 
 " Basic settings
 """"""""""""""""
+
+" statusline
+" http://learnvimscriptthehardway.stevelosh.com/chapters/17.html
+set statusline=%f         " Path to the file
+set statusline+=%=        " Switch to the right side
+set statusline+=%{fugitive#statusline()} " current branch
+set statusline+=\ \ %l    " Current line
+set statusline+=/         " Separator
+set statusline+=%L        " Total lines
 
 set nocompatible
 set history=100
@@ -262,6 +273,7 @@ set switchbuf=useopen
 
 au BufRead,BufNewFile *.hamlc set ft=haml
 au BufRead,BufNewFile *.md    set ft=markdown
+au BufRead,BufNewFile haproxy*.cfg  set ft=haproxy
 
 " commandT
 let g:CommandTMaxHeight=15
@@ -280,3 +292,4 @@ augroup END
 
 " }}}
 
+imap frosli #<SPACE>frozen_string_literal:<SPACE>true
